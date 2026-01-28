@@ -2,7 +2,7 @@ const express = require('express')
 const http = require('http');
 const cors = require('cors')
 const session = require('express-session');
-
+const connectDB = require('./config/connectdb');
 
 const app = express()
 const port = 3000
@@ -21,7 +21,7 @@ app.get('/', async(req,res)=>{
 res.send({message:"Allah Loves Samsu !"})
 })
 
-
+connectDB()
 
 
 
