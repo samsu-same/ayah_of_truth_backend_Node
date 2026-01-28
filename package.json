@@ -2,9 +2,9 @@
   "name": "ayah_of_truth",
   "version": "1.0.0",
   "description": "Ayah of truth ",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
