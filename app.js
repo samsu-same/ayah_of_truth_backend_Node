@@ -22,6 +22,7 @@ app.use("/api/articles", articleRoutes);
 app.get('/', async(req,res)=>{
 res.send({message:"Allah Loves Samsu and Muskan !"})
 })
+
 // 404 handler
 // app.all('*', (req, res) => {
 //   res.status(404).json({
