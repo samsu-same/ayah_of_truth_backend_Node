@@ -22,7 +22,13 @@ const ArticleSchema = new mongoose.Schema(
             "image",
             "youtube",
             "gallery",
-            "customHTML"
+            "customHTML",
+            // NEW TYPES ADDED HERE
+            "bulletList",      // For bullet points
+            "numberedList",    // For numbered lists
+            "linkButton",      // For prominent call-to-action links
+            "linkGroup",       // For multiple related links
+            "accordion"        // For expandable content with bullets
           ]
         },
         data: mongoose.Schema.Types.Mixed,
