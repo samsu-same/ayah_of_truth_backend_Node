@@ -30,7 +30,6 @@ exports.getArticles = async (req, res) => {
     if (isActive !== undefined) filter.isActive = isActive === "true";
 
     const articles = await articleService.getArticles(filter);
-
     res.json({
       success: true,
       count: articles.length,

@@ -5,7 +5,7 @@ const session = require('express-session');
 const articleRoutes = require("./features/article/article.route");
 const verseRoutes = require('./routes/verses');
 const dailyRoutes = require('./routes/daily');
-
+const dailyDuaRoutes = require('./features/dailydua/dailydua.route');
 //middleware
 app.use(cors())
 app.use(express.json())
@@ -19,6 +19,7 @@ app.use(express.json())
 app.use('/api/verses', verseRoutes);
 app.use('/api/daily', dailyRoutes);
 app.use("/api/articles", articleRoutes);
+app.use("/api/dailydua", dailyDuaRoutes);
 app.get('/', async(req,res)=>{
 res.send({message:"Allah Loves Samsu and Muskan !"})
 })
