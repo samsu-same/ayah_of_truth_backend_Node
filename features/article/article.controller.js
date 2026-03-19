@@ -101,7 +101,6 @@ exports.deleteArticle = async (req, res) => {
         message: "Article not found"
       });
     }
-
     res.json({
       success: true,
       message: "Article deactivated"
