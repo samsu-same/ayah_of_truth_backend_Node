@@ -3,8 +3,8 @@ const app = express()
 const cors = require('cors')
 const session = require('express-session');
 const articleRoutes = require("./features/article/article.route");
-const verseRoutes = require('./routes/verses');
-const dailyRoutes = require('./routes/daily');
+
+
 const dailyDuaRoutes = require('./features/dailydua/dailydua.route');
 //middleware
 app.use(cors())
@@ -16,13 +16,19 @@ app.use(express.json())
 // }))
 
 // Routes
-app.use('/api/verses', verseRoutes);
-app.use('/api/daily', dailyRoutes);
+
+
 app.use("/api/articles", articleRoutes);
 app.use("/api/dailydua", dailyDuaRoutes);
 app.get('/', async(req,res)=>{
 res.send({message:"Allah Loves Samsu and Muskan !"})
 })
+app.get("/test", (req, res) => {
+  res.json({
+    message: "Cluster working",
+    pid: process.pid
+  });
+});
 
 // 404 handler
 // app.all('*', (req, res) => {
