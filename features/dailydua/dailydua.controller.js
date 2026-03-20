@@ -1,4 +1,5 @@
 const duaService = require("./dailydua.service");
+const redisClient = require("../../config/redisClient");
 
 exports.createDua = async (req, res) => {
   try {
@@ -138,7 +139,26 @@ exports.deleteDua = async (req, res) => {
 //Get Daily Dua (Featured)
 exports.getDailyDua = async (req, res) => {
   try {
+        const cacheKey = "daily_dua";
+            // 1. Check Redis first
+    const cachedDua = await redisClient.get(cacheKey);
+    if (cachedDua) {
+      return res.json({
+        success: true,
+        data: JSON.parse(cachedDua),
+        cached: true // optional flag for debugging
+      });
+    }
+  // 2. Fetch from MongoDB if not in cache
     const dua = await duaService.getDailyDua();
+        if (!dua) {
+      return res.status(404).json({
+        success: false,
+        message: "Daily dua not found"
+      });
+    }
+        // 3. Store in Redis with expiry (e.g., 1 hour)
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(dua));
 
     res.json({
       success: true,

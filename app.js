@@ -3,8 +3,8 @@ const app = express()
 const cors = require('cors')
 const session = require('express-session');
 const articleRoutes = require("./features/article/article.route");
-
-
+const rateLimit = require("express-rate-limit");
+const compression = require("compression");
 const dailyDuaRoutes = require('./features/dailydua/dailydua.route');
 //middleware
 app.use(cors())
@@ -15,6 +15,11 @@ app.use(express.json())
 //   saveUninitialized: false,  
 // }))
 
+app.use(compression());  // for high traffic, compress responses to save bandwidth
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs  
+}));         
 // Routes
 
 
