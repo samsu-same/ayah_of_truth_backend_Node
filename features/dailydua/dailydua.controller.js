@@ -176,11 +176,31 @@ exports.getDailyDua = async (req, res) => {
 exports.getDuasByCategory = async (req, res) => {
   try {
     const { category } = req.params;
-
+    const cacheKey = `duas_category_${category}`;
+    // 1. Check Redis first
+    const cachedDuas = await redisClient.get(cacheKey);
+    if (cachedDuas) {
+      return res.json({
+        success: true,    
+        count: cachedDuas.length,
+        cached: true, // optional flag for debugging
+        data: JSON.parse(cachedDuas)
+      });
+    }
+    // 2. Fetch from MongoDB if not in cache
     const duas = await duaService.getDuasByCategory(category);
+    if (!duas || duas.length === 0) {
+      return res.status(404).json({
+        success: false,   
+        message: "No duas found for this category"  
+      });
+    }
+    // 3. Store in Redis with expiry (e.g., 1 hour)
+    await redisClient.setEx(cacheKey, 3600, JSON.stringify(duas));
 
     res.json({
       success: true,
+      count: duas.length,
       data: duas,
     });
 

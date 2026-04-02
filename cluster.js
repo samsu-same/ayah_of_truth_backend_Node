@@ -20,6 +20,6 @@ if (cluster.isPrimary) {
   });
 
 } else {
-  console.log(`Worker started: ${process.pid}`);
+//   console.log(`Worker started: ${process.pid}`);
   require("./server"); // start express server
 }
